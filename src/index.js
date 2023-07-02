@@ -54,9 +54,9 @@ function hendleSelectBreed(evt) {
   ref.breedSelect.classList.add('is-hidden');
   ref.catInfo.classList.add('is-hidden');
 
-  ref.breedSelect.classList.remove('breed-select');
-  ref.loader.classList.add('loader');
-  ref.catInfo.classList.remove('cat-info');
+  // ref.breedSelect.classList.remove('breed-select');
+  // ref.loader.classList.add('loader');
+  // ref.catInfo.classList.remove('cat-info');
 
   const breedId = evt.currentTarget.value;
 
