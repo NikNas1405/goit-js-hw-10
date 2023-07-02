@@ -1,6 +1,6 @@
 import './styles.css';
 // import SlimSelect from 'slim-select';
-import { Report } from 'notiflix/build/notiflix-notify-aio';
+import Notiflix from 'notiflix';
 
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
@@ -42,7 +42,7 @@ function onFetchError() {
 
   ref.error.classList.remove('is-hidden');
 
-  Report.failure(
+  Notiflix.Report.failure(
     '&#128532; Something went wrong!',
     'Try reloading the page!',
     'Try Again'
@@ -88,3 +88,9 @@ function hendleSelectBreed(evt) {
       }
     });
 }
+
+Notiflix.Report.info(
+  '👋 Hello!',
+  'For starting, please, choose the cat`s breed information you want to get',
+  'Okay'
+);
