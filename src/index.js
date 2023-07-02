@@ -1,7 +1,7 @@
-import './styles.css';
-// import SlimSelect from 'slim-select';
-import Notiflix from 'notiflix';
 
+// ======================BEFORE REFACTORING=====================================================
+import './styles.css';
+import Notiflix from 'notiflix';
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
 const ref = {
@@ -11,8 +11,8 @@ const ref = {
   catInfo: document.querySelector('.cat-info'),
 };
 
-ref.error.classList.add('is-hidden');
 ref.loader.classList.add('is-hidden');
+ref.error.classList.add('is-hidden');
 
 ref.breedSelect.addEventListener('change', hendleSelectBreed);
 
@@ -31,32 +31,10 @@ fetchBreeds()
     }
   });
 
-function onFetchError() {
-  ref.breedSelect.classList.add('is-hidden');
-  ref.loader.classList.add('is-hidden');
-  ref.catInfo.classList.add('is-hidden');
-
-  //  ref.breedSelect.classList.remove('breed-select');
-  //  ref.loader.classList.remove('loader');
-  //  ref.catInfo.classList.remove('cat-info');
-
-  ref.error.classList.remove('is-hidden');
-
-  Notiflix.Report.failure(
-    '&#128532; Something went wrong!',
-    'Try reloading the page!',
-    'Try Again'
-  );
-}
-
 function hendleSelectBreed(evt) {
+  ref.catInfo.innerHTML = '';
   ref.loader.classList.remove('is-hidden');
   ref.breedSelect.classList.add('is-hidden');
-  ref.catInfo.classList.add('is-hidden');
-
-  // ref.breedSelect.classList.remove('breed-select');
-  // ref.loader.classList.add('loader');
-  // ref.catInfo.classList.remove('cat-info');
 
   const breedId = evt.currentTarget.value;
 
@@ -64,11 +42,6 @@ function hendleSelectBreed(evt) {
     .then(data => {
       ref.loader.classList.add('is-hidden');
       ref.breedSelect.classList.remove('is-hidden');
-      ref.catInfo.classList.remove('is-hidden');
-
-      //  ref.breedSelect.classList.add('breed-select');
-      //  ref.loader.classList.remove('loader');
-      //  ref.catInfo.classList.add('cat-info');
 
       const { url, breeds } = data[0];
       ref.catInfo.innerHTML = `<div class="box-img">
@@ -79,14 +52,26 @@ function hendleSelectBreed(evt) {
   <p>${breeds[0].description}</p>
   <p><b>Temperament:</b> ${breeds[0].temperament}</p>
  </div>`;
-
-      ref.catInfo.classList.remove('is-hidden');
     })
     .catch(error => {
       if (error) {
         onFetchError();
       }
     });
+}
+
+function onFetchError() {
+  ref.breedSelect.classList.add('is-hidden');
+  ref.loader.classList.add('is-hidden');
+  ref.catInfo.classList.add('is-hidden');
+
+  ref.error.classList.remove('is-hidden');
+
+  Notiflix.Report.failure(
+    '&#128532; Something went wrong!',
+    'Try reloading the page!',
+    'Try Again'
+  );
 }
 
 Notiflix.Report.info(
