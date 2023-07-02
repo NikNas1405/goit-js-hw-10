@@ -1,17 +1,19 @@
-
-// ======================BEFORE REFACTORING=====================================================
 import './styles.css';
+// import SlimSelect from 'slim-select';
 import Notiflix from 'notiflix';
+
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
 const ref = {
   breedSelect: document.querySelector('.breed-select'),
   loader: document.querySelector('.loader'),
+  cssLoader: document.querySelector('.css-loader'),
   error: document.querySelector('.error'),
   catInfo: document.querySelector('.cat-info'),
 };
 
 ref.loader.classList.add('is-hidden');
+ref.cssLoader.classList.add('is-hidden');
 ref.error.classList.add('is-hidden');
 
 ref.breedSelect.addEventListener('change', hendleSelectBreed);
@@ -34,14 +36,14 @@ fetchBreeds()
 function hendleSelectBreed(evt) {
   ref.catInfo.innerHTML = '';
   ref.loader.classList.remove('is-hidden');
-  ref.breedSelect.classList.add('is-hidden');
+  ref.cssLoader.classList.remove('is-hidden');
 
   const breedId = evt.currentTarget.value;
 
   fetchCatByBreed(breedId)
     .then(data => {
       ref.loader.classList.add('is-hidden');
-      ref.breedSelect.classList.remove('is-hidden');
+      ref.cssLoader.classList.add('is-hidden');
 
       const { url, breeds } = data[0];
       ref.catInfo.innerHTML = `<div class="box-img">
@@ -63,6 +65,7 @@ function hendleSelectBreed(evt) {
 function onFetchError() {
   ref.breedSelect.classList.add('is-hidden');
   ref.loader.classList.add('is-hidden');
+  ref.cssLoader.classList.add('is-hidden');
   ref.catInfo.classList.add('is-hidden');
 
   ref.error.classList.remove('is-hidden');
